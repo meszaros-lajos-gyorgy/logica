@@ -10,7 +10,7 @@ const state = {
   mouse: {
     pressed: false,
     posX: 300,
-    posY: 300,
+    posY: 200,
   },
 };
 
@@ -45,18 +45,23 @@ const norGate = (x, y, ctx) => {
     true
   );
 
-  const gateTip = {
-    x: x + 70 + size * 2,
-    y: y,
-  };
+  ctx.arc(
+    x - arcTip.x + 70 + (Math.sin(Math.PI / 2) - 1) * (size * 2),
+    y + size * 2 - arcTip.y,
+    size * 2,
+    -(Math.PI / 4),
+    -(Math.PI / 2),
+    true
+  );
+
+  ctx.lineTo(x - arcTip.x, y - arcTip.y);
+
+  ctx.arc(x - size, y, size, -Math.PI * 0.2, 0, false);
 
   ctx.stroke();
 
   ctx.fillStyle = "orange";
-  // ctx.fillRect(x - 1 + centerOffset.x, y - 1 + centerOffset.y, 3, 3);
-
-  ctx.fillRect(x + 70 - 1, gateTip.y - 1, 3, 3);
-  ctx.fillRect(gateTip.x - 1, gateTip.y - 1, 3, 3);
+  ctx.fillRect(x - 1 + centerOffset.x, y - 1 + centerOffset.y, 3, 3);
 };
 
 const renderScene = () => {
