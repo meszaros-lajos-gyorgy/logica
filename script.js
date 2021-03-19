@@ -9,20 +9,62 @@ const state = {
   },
   mouse: {
     pressed: false,
-    posX: 0,
-    posY: 0,
+    posX: 300,
+    posY: 300,
   },
+};
+
+const norGate = (x, y, ctx) => {
+  const size = 100;
+  const centerOffset = {
+    x: (size * 4) / 5,
+    y: 0,
+  };
+  x -= centerOffset.x;
+  y -= centerOffset.y;
+
+  ctx.fillStyle = "#000000";
+  ctx.lineWidth = 5;
+
+  ctx.beginPath();
+  ctx.arc(x - size, y, size, 0, Math.PI * 0.2, false);
+
+  const arcTip = {
+    x: size - Math.cos(Math.PI / 5) * size,
+    y: Math.sin(Math.PI / 5) * size,
+  };
+
+  ctx.lineTo(x - arcTip.x + 70, y + arcTip.y);
+
+  ctx.arc(
+    x - arcTip.x + 70,
+    y + arcTip.y - size * 2,
+    size * 2,
+    Math.PI / 2,
+    Math.PI / 4,
+    true
+  );
+
+  const gateTip = {
+    x: x + 70 + size * 2,
+    y: y,
+  };
+
+  ctx.stroke();
+
+  ctx.fillStyle = "orange";
+  // ctx.fillRect(x - 1 + centerOffset.x, y - 1 + centerOffset.y, 3, 3);
+
+  ctx.fillRect(x + 70 - 1, gateTip.y - 1, 3, 3);
+  ctx.fillRect(gateTip.x - 1, gateTip.y - 1, 3, 3);
 };
 
 const renderScene = () => {
   ctx.fillStyle = "#eaeaea";
   ctx.fillRect(0, 0, state.screen.width, state.screen.height);
 
-  ctx.fillStyle = "rgb(200, 0, 0)";
-  ctx.fillRect(10, 10, 50, 50);
-
-  ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-  ctx.fillRect(30, 30, 50, 50);
+  norGate(state.mouse.posX, state.mouse.posY, ctx);
+  // norGate(100, 100, ctx);
 };
 
 const mainLoop = () => {
